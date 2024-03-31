@@ -32,9 +32,7 @@ class Server:
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """Get page from dataset
         """
-        if (type(page) != int) or (type(page_size) != int):
-            raise AssertionError
-        assert page > 0
-        assert page_size > 0
+        assert isinstance(page, int) and page > 0
+        assert isinstance(page_size, int) and page_size > 0
         indx_range = index_range(page, page_size)
         return self.dataset()[indx_range[0]:indx_range[1]]
