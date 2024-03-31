@@ -4,6 +4,7 @@ import csv
 import math
 from typing import List
 
+
 def index_range(page: int, page_size: int):
     """Find index range"""
     start_index = (page - 1) * (page_size)
