@@ -1,6 +1,8 @@
-
-from typing import List, Tuple, Dict
+#!/usr/bin/env python3
+""" Simple pagination """
 import csv
+import math
+from typing import List, Tuple, Dict
 
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
@@ -39,23 +41,15 @@ class Server:
         return self.dataset()[start:end]
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
+        """ Get hypermedia pagination
         """
-        Get hypermedia pagination
-        """
-        assert isinstance(page, int) and page > 0
-        assert isinstance(page_size, int) and page_size > 0
-
-        dataset_page = self.get_page(page, page_size)
-        total_pages = len(dataset_page) // page_size + 1
-
-        next_page = page + 1 if page < total_pages else None
-        prev_page = page - 1 if page > 1 else None
-
+        data = self.get_page(page, page_size)
+        total_pages = math.ceil(len(self.dataset()) / page_size)
         return {
-            "page_size": len(dataset_page),
-            "page": page,
-            "data": dataset_page,
-            "next_page": next_page,
-            "prev_page": prev_page,
-            "total_pages": total_pages
+            'page_size': len(data),
+            'page': page,
+            'data': data,
+            'next_page': page + 1 if page < total_pages else None,
+            'prev_page': page - 1 if page > 1 else None,
+            'total_pages': total_pages
         }
